@@ -1,0 +1,439 @@
+* {
+    box-sizing: border-box;
+}
+
+body, .wrapper, .slide {
+    margin: 0px;
+    padding: 10px;
+    width: 100%;
+    height: 200vh;
+    overflow-x: hidden;
+}
+
+.wrapper {
+    position: relative;
+    background-color: gainsboro;
+    overflow-y: hidden;
+}
+
+.wrapper__inner {
+    display: flex;
+    position: relative;
+}
+
+.slider1, .slider2, .slider3, .slider4 {
+    opacity: 1;
+    position: absolute;
+    width: 390px;
+    height: 259px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.slider2 {
+    left: 429px;
+}
+
+.slider3 {
+    top: 360px;
+}
+
+.slider4 {
+    top: 360px;
+    left: 429px;
+}
+
+.slide {
+    margin: 0px;
+    padding: 5px;
+    width: 390px;
+    height: 37vh;
+    position: absolute;
+    overflow-x: hidden;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 2;
+}
+
+.fade {
+    -webkit-transition: 1s all ease;
+    -o-transition: 1s all ease;
+    transition: 1s all ease;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+}
+
+.header__title {
+    margin-left: 40px;
+}
+
+.header__title2 {
+    margin-right: 40px;
+}
+
+.header__title:hover, .header__title2:hover {
+    color: blue;
+    cursor: pointer;
+}
+
+/* 1й слайдер  */
+
+#England {
+    background-image: url('../img/img-eng.png');
+}
+
+#Germany {
+    background-image: url('../img/img-ger.png');
+}
+
+#Hungary {
+    background-image: url('../img/img-hun.png');
+}
+
+#Italy {
+    background-image: url('../img/img-it.png');
+}
+
+#Ukraine {
+    background-image: url('../img/img-ua.png');
+}
+
+/* 2й слайдер  */
+
+#Belgium {
+    background-image: url('../img/img-bel.png');
+}
+
+#France {
+    background-image: url('../img/img-fra.png');
+}
+
+#Spain {
+    background-image: url('../img/img-spa.png');
+}
+
+#Austria {
+    background-image: url('../img/img-aus.png');
+}
+
+#Poland {
+    background-image: url('../img/img-pol.png');
+}
+
+.slide-inout {
+    -webkit-transform: translateX(100px);
+    -ms-transform: translateX(1000px);
+    transform: translateX(1000px);
+    -webkit-transition: 0.6s all ease;
+    -o-transition: 0.6s all ease;
+    transition: 0.6s all ease;
+}
+
+.active {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+}
+
+.arrow1, .arrow2, .arrow3, .arrow4 {
+    cursor: pointer;
+    position: absolute;
+    top: 172px;
+    margin-top: -51px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    z-index: 10;
+    opacity: .6;
+}
+
+#arrow1-left, #arrow2-left, #arrow3-left, #arrow4-left {
+    border-width: 30px 40px 30px 0;
+    border-color: transparent rgb(35, 4, 41) transparent transparent;
+    left: -10px;
+    margin-left: 30px;
+}
+
+#arrow2-left {
+    left: 415px;
+}
+
+#arrow3-left {
+    top: 530px;
+}
+
+#arrow4-left {
+    left: 415px;
+    top: 530px;
+}
+
+#arrow1-left:hover, #arrow2-left:hover, #arrow3-left:hover, #arrow4-left:hover {
+    border-color: transparent rgb(12, 23, 167) transparent transparent;
+}
+
+#arrow1-right, #arrow2-right, #arrow3-right, #arrow4-right {
+    border-width: 30px 0 30px 40px;
+    border-color: transparent transparent transparent rgb(35, 4, 41);
+    left: 350px;
+}
+
+#arrow2-right {
+    left: 783px;
+}
+
+#arrow3-right {
+    top: 530px;
+}
+
+#arrow4-right {
+    left: 783px;
+    top: 530px;
+}
+
+#arrow1-right:hover, #arrow2-right:hover, #arrow3-right:hover, #arrow4-right:hover {
+    border-color: transparent transparent transparent rgb(12, 23, 167);
+}
+
+#pagination1, #pagination2, #pagination3, #pagination4 {
+    position: absolute;
+    top: 30px;
+    display: block;
+    left: 110px;
+    width: 200px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    color: rgb(255, 255, 255);
+    z-index: 3;
+}
+
+#pagination2 {
+    left: 535px;
+}
+
+#pagination3 {
+    top: 395px;
+}
+
+#pagination4 {
+    left: 535px;
+    top: 395px;
+}
+
+#pagination1 li, #pagination2 li, #pagination3 li, #pagination4 li {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    margin: 0 8px;
+    padding: 0;
+    cursor: pointer;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 5px 3px 3px rgb(35, 4, 41);
+    background-color: rgb(35, 4, 41);
+}
+
+#pagination1 li:hover, #pagination2 li:hover, #pagination3 li:hover, #pagination4 li:hover {
+    border: 1px solid rgb(10, 16, 99);
+    box-shadow: 7px 5px 5px rgb(10, 16, 99);
+    background-color: rgb(15, 1, 46);
+}
+
+.dotactive1, .dotactive2, .dotactive3, .dotactive4 {
+    color: rgb(28, 213, 238);
+}
+
+.hide {
+    visibility: hidden;
+}
+
+/* ----- лепим модалку ------- */
+
+.modal {
+    background-color: rgba(0, 0, 0, .8);
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 20;
+}
+
+.modal__open {
+    visibility: visible;
+    opacity: 1;
+    position: fixed;
+}
+
+.modal__inner {
+    position: absolute;
+    left: 200px;
+    top: 120px;
+    width: 500px;
+    height: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 105px;
+}
+
+.modal__inner p {
+    font-size: 24px;
+    font-weight: bold;
+    top: 250px;
+    text-align: center;
+}
+
+.modal__close {
+    position: absolute;
+    top: 120px;
+    left: 670px;
+    width: 20px;
+    padding: 3px;
+    color: blue;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 30;
+}
+
+.modal__hiddentext p {
+    display: none;
+}
+
+.modal__close:hover {
+    color: red;
+}
+
+@media only screen and (max-width: 870px) {
+    .wrapper__inner {
+        display: block;
+        position: relative;
+    }
+    .slider2 {
+        left: 0;
+        top: 290px;
+    }
+    .slider3 {
+        left: 0;
+        top: 580px;
+    }
+    .slider4 {
+        left: 0;
+        top: 870px;
+    }
+    .arrow2 {
+        top: 467px;
+    }
+    #arrow2-left {
+        left: -10px;
+    }
+    #arrow2-right {
+        left: 350px;
+    }
+    #arrow3-left, #arrow3-right {
+        top: 746px;
+    }
+    #arrow4-left, #arrow4-right {
+        top: 1040px;
+        left: -10px;
+    }
+    #arrow4-right {
+        left: 352px;
+    }
+    #pagination2 {
+        top: 325px;
+        left: 110px;
+    }
+    #pagination3 {
+        top: 615px;
+        left: 110px;
+    }
+    #pagination4 {
+        top: 900px;
+        left: 110px;
+    }
+    .modal__inner {
+        top: 130px;
+        width: 400px;
+        height: 240px;
+        padding-top: 75px;
+        left: 121px;
+    }
+    .modal__close {
+        top: 130px;
+        left: 483px;
+    }
+    .modal {
+        padding-left: 200px;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .modal__inner {
+        padding-top: 54px;
+        top: 100px;
+        left: 50px;
+        width: 320px;
+        height: 192px;
+    }
+    .modal__close {
+        top: 98px;
+        left: 340px;
+    }
+    #pagination1, #pagination2, #pagination3, #pagination4 {
+        left: 78px;
+    }
+    #arrow1-right, #arrow2-right, #arrow3-right, #arrow4-right {
+        left: 275px;
+    }
+    #arrow3-right, #arrow3-left {
+        top: 645px;
+    }
+    #arrow4-right, #arrow4-left {
+        top: 910px;
+    }
+    .slide, .slider1, .slider2, .slider3, .slider4 {
+        width: 310px;
+        height: 29vh;
+    }
+    .slider1, .slider2, .slider3, .slider4 {
+        padding-top: 0;
+        margin-top: 0;
+    }
+    .slider2 {
+        top: 255px;
+    }
+    .slider3 {
+        top: 510px;
+    }
+    .slider4 {
+        top: 770px;
+    }
+    .arrow1 {
+        top: 135px;
+    }
+    .arrow2 {
+        top: 390px;
+    }
+    #pagination2 {
+        top: 289px;
+    }
+    #pagination3 {
+        top: 539px;
+    }
+    #pagination4 {
+        top: 804px;
+    }
+}
