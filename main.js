@@ -1,6 +1,3 @@
-const wrapper = $('.wrapper')[0];   // родитель контейнера для слайдера
-const modal = $('.modal')[0];       // див модалки
-const modalClose = $('.modal__close')[0];   // див кнопки закрытия модалки
 
 // Настройки слайдера
 const SLIDER_ADJUSTMENT_1 = {
@@ -41,27 +38,23 @@ const SLIDER_ADJUSTMENT_2 = {
 //     autoPlayInterval: 1800,  //ms  
 // };
 // ----------------тест-----слайд 3+4-------------
-function Slider(sliderSettings, slidesClass) {
+function Slider(sliderSettings) {
     this.settings = sliderSettings;
     this.autoPlayTimer = null;
-    this.sliderImages = $(`.${slidesClass}`)[0].children;
+    this.sliderImages = $(`.slider${this.settings.id}`).children();
     this.currentImageIndex = 0;
     this.dots = [];
 }
 // --------генерируем---слайдеры------------------
-let slider1 = new Slider(SLIDER_ADJUSTMENT_1, "slider1");
-let slider2 = new Slider(SLIDER_ADJUSTMENT_2, "slider2");
-
-// let slider3 = new Slider(SLIDER_ADJUSTMENT_3, "slider3"); //тест
-// let slider4 = new Slider(SLIDER_ADJUSTMENT_4, "slider4"); //тест
-
-
+const slider1 = new Slider(SLIDER_ADJUSTMENT_1);
+const slider2 = new Slider(SLIDER_ADJUSTMENT_2);
+// const slider3 = new Slider(SLIDER_ADJUSTMENT_3); //тест
+// const slider4 = new Slider(SLIDER_ADJUSTMENT_4); //тест
 
 callSlider(slider1);  // запуск общей функции 
 callSlider(slider2);  // запуск общей функции 
 // callSlider(slider3);  // запуск общей функции тест
 // callSlider(slider4);  // запуск общей функции тест
-
 // --------------------------Пагинация-вывод-кнопок-на-экран-------------------
 function addPaginationOnScreen(arr, slider) {
     let ul = document.createElement('ul');
@@ -78,28 +71,21 @@ function addPaginationOnScreen(arr, slider) {
 }
 // ----------------вешаю-событие-на-дотсы-----------------------------------
 function addEventOnDots(slider) {
-    let ul = $(`#pagination${slider.settings.id}`)[0];
+    let ul = $(`#pagination${slider.settings.id}`);
     $(ul).on('click', function (element) {
         clearInterval(slider.autoPlayTimer);  //  останавливаю режим презентации
-        let target = element.target;
-        if ($(modal).hasClass('modal__open')) {
-            $(modal).removeClass('modal__open');
-        }
-        if ($(target).attr('type')) {
+        if ($(element.target).attr('type')) {
             reset(slider);
-            slider.currentImageIndex = $(target).html() - 1;
-            $(target).addClass(`dotactive${slider.settings.id}`);
+            slider.currentImageIndex = $(element.target).html() - 1;
+            $(element.target).addClass(`dotactive${slider.settings.id}`);
             $(slider.sliderImages[slider.currentImageIndex]).addClass('active');
         }
-
     });
 }
 // -----------------активация/деактивация--pagination-------------------------
 function checkPagination(slider) {
     if (!slider.settings.pagination) {
-        for (let j = 0; j < slider.dots.length; j++) {
-            $(slider.dots[j]).addClass('hide');
-        }
+        $(slider.dots).addClass('hide');
     }
 }
 // -----------------активация/деактивация--arrows--------------------------------
@@ -114,16 +100,14 @@ function createArrows(slider) {
     $(nextImage).addClass(`arrow${i}`);
     $(nextImage).attr("type", "arrow-next" + `${i}`);
     if (slider.settings.arrows) {
-        $(wrapper).append(prevImage);
-        $(wrapper).append(nextImage);
+        $('.wrapper').append(prevImage);
+        $('.wrapper').append(nextImage);
     }
 }
 // ----------------------прячу все картинки-------------------------------------
 function reset(slider) {
-    for (let i = 0; i < slider.sliderImages.length; i++) {
-        $(slider.sliderImages[i]).removeClass('active');
-        $(slider.dots[i]).removeClass(`dotactive${slider.settings.id}`);
-    }
+    $(slider.sliderImages).removeClass('active');
+    $(slider.dots).removeClass(`dotactive${slider.settings.id}`);
 }
 // ----------------------показываю предыдущую картину-----------------------------
 function showPrev(slider) {
@@ -134,9 +118,8 @@ function showPrev(slider) {
 }
 
 function prevArrowEvent(slider) {
-    $(wrapper).on('click', function (element) {
-        let el = element.target;
-        if ($(el).attr("type") != `arrow-prev${slider.settings.id}`) {
+    $('.wrapper').on('click', function (element) {
+        if ($(element.target).attr("type") != `arrow-prev${slider.settings.id}`) {
             return;
         } else {
             clearInterval(slider.autoPlayTimer);  //  останавливаю режим презентации
@@ -157,9 +140,8 @@ function showNext(slider) {
 }
 
 function nextArrowEvent(slider) {
-    $(wrapper).on('click', function (element) {
-        let el = element.target;
-        if ($(el).attr("type") != `arrow-next${slider.settings.id}`) {
+    $('.wrapper').on('click', function (element) {
+        if ($(element.target).attr("type") != `arrow-next${slider.settings.id}`) {
             return;
         } else {
             clearInterval(slider.autoPlayTimer);  //  останавливаю режим презентации
@@ -179,28 +161,23 @@ function startSlide(slider) {
 // -------------------------------Modal----------------------------------------------
 function showModalImage(slider) {
     $(`.slider${slider.settings.id}`).on('click', function (event) {
-        let element = event.target;
         clearInterval(slider.autoPlayTimer);     //  останавливаю режим презентации
-        if ($(element).hasClass('active')) {
-            $(modal).addClass('modal__open');   // вывожу модалку
-            let flag = $(element).attr('country');
+        if ($(event.target).hasClass('active')) {
+            $('.modal').addClass('modal__open');   // вывожу модалку
+            let flag = $(event.target).attr('country');
             let div = document.createElement('div');
             $(div).addClass('modal__inner');
             $(div).html(`<p>${flag}</p>`);
             $(div).prop('id', `${flag}`);
-            $(modal).append(div);
+            $('.modal').append(div);
         }
     });
 }
 // ----------------прячем модалку кликнув по "неактивному" окну--------------------
-$(modal).on('click', function (e) {
-    if (e.target === modal) {
-        $(modal).removeClass('modal__open');
+$('.wrapper').on('click', function (e) {
+    if ($(e.target).hasClass('modal') || ($(e.target)).hasClass('modal__close')) {
+        $('.modal').removeClass('modal__open');
     }
-});
-//----------------прячем-модалку-кликнув-по-"[Х]"----------------------------------
-$(modalClose).on('click', function () {
-    $(modal).removeClass('modal__open');
 });
 // ----------------------slider----autoplay----------------------------------------
 function sliderInitialization(slider, autoPlayInterval) {
@@ -220,22 +197,18 @@ function sliderInitialization(slider, autoPlayInterval) {
 // ---------------------активация/деактивация--fadeInOut----------------------------------
 function fadeInOutCancellation(slider) {
     if (!slider.settings.fadeInOut) {
-        for (let i = 0; i < slider.sliderImages.length; i++) {
-            $(slider.sliderImages[i]).removeClass('fade');
-        }
+        $(slider.sliderImages).removeClass('fade');
     }
 }
 // ------------------------активация/деактивация--SlideInOut----------------------------------
 function slideInOutCancellation(slider) {
     if (slider.settings.slideInOut) {
-        for (let i = 0; i < slider.sliderImages.length; i++) {
-            $(slider.sliderImages[i]).addClass('slide-inout');
-        }
+        $(slider.sliderImages).addClass('slide-inout');
     }
 }
 // -----------------------------------------------------------------------------------------------------
 function callSlider(slider) {
-    $(wrapper).append(addPaginationOnScreen(slider.sliderImages, slider));  // вывод пагинации на экран
+    $('.wrapper').append(addPaginationOnScreen(slider.sliderImages, slider));  // вывод пагинации на экран
     checkPagination(slider);                     // проверяем необходимость наличия пагинации
     startSlide(slider);                          // пуск слайдера (откат в стартовое положение)
     createArrows(slider);                        // выводим кнопки > / <
